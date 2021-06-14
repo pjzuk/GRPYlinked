@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd ${0%/*} || exit 1    # run from this directory
+
+../../GRPYlinked/bin/GRPYlinked.exe
+python ../../GRPYlinked/bin/calc_msd.py out_cm.dat  # works for python 2 and 3 
+

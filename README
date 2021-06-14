@@ -1,0 +1,99 @@
+author: Pawel Jan Zuk
+copyright (c) 2021 Pawel Jan Zuk
+under GPL v3
+
+***************************
+    INTRODUCTION:
+***************************
+
+This file contains:
+
+I   GRPYlinked 
+    The open source FORTRAN implementation of the Generalized Rotne-Prager-Yamakawa hydrodynamic interactions program
+    for simulating dynamics of spherical particles with flexible, inextensible linkers.
+    in GRPYlinked folder
+
+    In case you use this code, compiled program or code elements, please cite the scientific papers (we understand that it is a lot but it took that much work):
+    1) The GRPY method
+       Wajnryb, E., Mizerski, K.A., Zuk, P.J. and Szymczak, P., 2013.
+       Generalization of the Rotne–Prager–Yamakawa mobility and shear disturbance tensors.
+       Journal of Fluid Mechanics, 731.
+    2) The polidispersity (different radii)
+       Zuk, P.J., Wajnryb, E., Mizerski, K.A. and Szymczak, P., 2014.
+       Rotne–Prager–Yamakawa approximation for different-sized particles in application to macromolecular bead models.
+       Journal of Fluid Mechanics, 741.
+    3) GRPY method summary
+       Bogdan Cichocki, Piotr Szymczak, and Paweł J. Żuk, 2021.
+       Generalized Rotne–Prager–Yamakawa approximation for Brownian dynamics in shear flow in bounded, unbounded, and periodic domains.
+       The Journal of Chemical Physics 154, 124905
+    4) this contribution (under consideration in Nature Chemical Biology)
+
+
+II  Strucutres used for calculation of hydrodynamic properties of PARP-1 protein with GRPY calcualted hydrodynamic properties
+    in structures folder
+
+
+III Examples of GRPYlinked program usage including PARP-1 protein
+    in results folder
+    
+
+***************************
+    USAGE:
+***************************
+
+
+The GRPYlinked is a standalone program and should install on any computer with fortran compiler.
+For the Unix system with make build system it is sufficient to enter
+  GRPYlinked
+folder and type
+  make
+This should produce executable file
+  GRPYlinked.exe
+inside 
+  bin
+folder.
+
+To uninstal it is sufficient to run
+  make clean
+inside the GRPYlinked folder
+
+The examples of usage are given in 
+  results
+folder. We also provide a scripts
+  runPrograms
+in each folder which contain all necessary commands to simulate the trajectory and run the python script for calculating the Mean Square Discplacement from the trajectory.
+
+In the folder where program will be executed user has to provide 
+  control_file.dat
+file including the necessary simulation parameters. They are specified entry by entry in the examples.
+User also has to specify
+  model.dat
+file which contains sphere radii and linker lengths. The order of entries is also explained in the examples.
+
+
+***************************
+        UNITS:
+***************************
+
+
+calculating the mobility matrices we assume that
+\pi \eta = 1
+thus the translational mobility coefficient for a single sphere will return
+1 / (6 \pi \eta a) = 1 / (6 a)
+where a is particle radius.
+
+The energy unit is
+k_B T
+Such choice specifies the relation between length scale and time scale:
+a single sphere with radius 0.5 will have a means sqaure displacement
+MSD(t) = 2 t.
+
+
+***************************
+        REMARKS:
+***************************
+
+
+GRPYlinked has a simple Euler time integration mechanism, which can lead to unphysically large displacements if time step is too large as interaction potentials are steep.
+
+Please read the source code for more details.

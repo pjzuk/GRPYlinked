@@ -1,0 +1,49 @@
+      SUBROUTINE STEPPER(CONF,RADII,DT,T)
+      USE SIZE           ! NN
+      USE LATTICE_SKEW   ! LR(3,3)
+      USE FORCE_PAR      ! GAMMA
+      IMPLICIT NONE
+      REAL*8 CONF(3*NN),RADII(NN),DT,T
+      REAL*8 A(3*NN,3*NN),C(3,3,3,NN),DCONF(3*NN)
+      REAL*8 F(3*NN),VM(3*NN),VS(3*NN),VC(3*NN),VB(3*NN),G(3*NN)
+      REAL*8 TSHEAR,TMOD
+      INTEGER I
+
+      CALL HYDRO(A,C,CONF,RADII)
+
+      CALL FORCE(F,CONF,NN)
+
+      VM=MATMUL(A,F)    ! MOBILITY*FORCE
+
+      CALL CHOLESKY(A,3*NN)
+      DO I=1,3*NN
+       CALL GAUSS(G(I))
+      ENDDO
+      VB=MATMUL(A,G)
+
+      DCONF=DT*( VM ) + SQRT(2.D0*DT)*VB
+
+C  EVALUATION OF COLLISIONS
+
+      CALL COLLISIONS_PER(CONF,DCONF,RADII,DT,T)
+
+      T=T+DT
+
+      RETURN
+      END
+
+*************************************************
+
+      SUBROUTINE GAUSS(G)
+      IMPLICIT NONE
+      REAL*8 G,PI
+      PARAMETER(PI=3.141592653589793D0)
+      REAL*8 A,B
+
+      CALL RANDOM_NUMBER(A)
+      CALL RANDOM_NUMBER(B)
+
+      G=SQRT(-2*LOG(A)) * COS(2*PI*B)
+
+      RETURN
+      END

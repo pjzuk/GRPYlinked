@@ -1,0 +1,3 @@
+0.5        first n lines correspond to bead radii
+0.5
+2.0        consecutive n-1 lines correspond to link length between bead centers

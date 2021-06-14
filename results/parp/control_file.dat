@@ -1,0 +1,7 @@
+6          number of particles
+10000      end time
+0.0005     delta t
+10         write evert k time steps
+123        random generator seed
+1000       FENE springs constant
+0.1        FENE springs max extension
